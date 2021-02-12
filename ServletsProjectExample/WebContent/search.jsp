@@ -1,20 +1,7 @@
+<%@page import="com.ServletsExample.servlets.UserExpense"%>
 <%@page import="com.ServletsExample.servlets.UserDetails"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet"%>
-
-<%@ page import="com.ServletsExample.servlets.DBConnection,com.ServletsExample.servlets.MySQLCreds " %>
-<%
-
-String PhoneNo=request.getParameter("PhoneNo");
-
-Connection connection = null;
-Statement statement = null;
-ResultSet resultSet = null;
-%>
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -37,30 +24,16 @@ body {
 <td class= "table">Phone No</td>
 </tr>
 
-<%UserDetails user = (UserDetails)request.getAttribute("user"); %>
 
-<%
-try{
-connection = DBConnection.getConnection();
-PreparedStatement ps = connection.prepareStatement("select * from userLogin where PhoneNo=?;");
-ps.setString(1,PhoneNo);
-resultSet = ps.executeQuery();
-
-while(resultSet.next()){
-%>
 <tr>
-<td class= "table"><%=resultSet.getString("UserName") %></td>
-<td class= "table"><%=resultSet.getString("FirstName") %></td>
-<td class= "table"><%=resultSet.getString("LastName") %></td>
-<td class= "table"><%=resultSet.getString("Address") %></td>
-<td class= "table"><%=resultSet.getString("PhoneNo") %></td>
+<td class= "table">${SearchedUser.userName} </td>
+<td class= "table">${SearchedUser.firstName}</td>
+<td class= "table">${SearchedUser.lastName}</td>
+<td class= "table">${SearchedUser.address}</td>
+<td class= "table">${SearchedUser.phoneNo}</td>
 </tr>
 <%
-}
-connection.close();
-} catch (Exception e) {
-e.printStackTrace();
-}
+
 %>
 </table>
 </body>
